@@ -3,17 +3,9 @@ import os
 import time
 
 cl = Client()
+cl.load_settings("session.json")
 
-cl = Client()
-
-cl.login("siham.14z", "smaili3200")
-cl.dump_settings("session.json")
-
-print("Session saved ✅")
-
-cl.dump_settings("session.json")
-
-print("Session updated ✅")
+print("Login with session ✅")
 
 last_seen_file = "last_seen.txt"
 
