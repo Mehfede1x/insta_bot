@@ -1,16 +1,16 @@
 from instagrapi import Client
-import os
 import time
+import os
 
 cl = Client()
 
-# Load session
+# Load session (مهم)
 cl.load_settings("session.json")
 print("Login with session ✅")
 
 last_seen_file = "last_seen.txt"
 
-# Load last seen message
+# قراءة آخر رسالة
 if os.path.exists(last_seen_file):
     with open(last_seen_file, "r", encoding="utf-8") as f:
         last_seen_id = f.read().strip()
@@ -31,30 +31,29 @@ while True:
             text = (last_message.text or "").lower()
             user_id = thread.users[0].pk
 
-            # ignore messages sent by you
+            # ignore messages ديالك
             if getattr(last_message, "is_sent_by_viewer", False):
                 continue
 
-            # ignore already seen messages
+            # ignore القديم
             if message_id == last_seen_id:
                 continue
 
-            # replies
+            # الردود
             if "salam" in text or "slm" in text:
                 reply = "Salam 👋 kif n9dr n3awnk?"
             elif "prix" in text or "taman" in text:
-                reply = "Marhba 👌 sift liya chno bghiti w an3tik taman."
+                reply = "Marhba 👌 sift liya chno bghiti w نعطيك التمن"
             elif "bot" in text:
-                reply = "Eywa 🤖 n9dro nsaybo lik bot 3la hsab talab dialk."
+                reply = "Eywa 🤖 kanbi3 bots Instagram"
             else:
-                reply = "Merhba 😊 chrah liya chno bghiti w anjawbk."
+                reply = "Merhba 😊 kif n9dr n3awnk?"
 
             cl.direct_send(reply, [user_id])
-            print("Reply sent ✅ ->", reply)
+            print("Reply sent:", reply)
 
-            # save last message
-            last_seen_id = message_id
-            with open(last_seen_file, "w", encoding="utf-8") as f:
+            # حفظ آخر message
+            with open(last_seen_file, "w") as f:
                 f.write(message_id)
 
         time.sleep(5)
