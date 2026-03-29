@@ -4,14 +4,15 @@ import time
 
 cl = Client()
 
-username = os.getenv("INSTA_USERNAME")
-password = os.getenv("INSTA_PASSWORD")
+cl.load_settings("session.json")
 
-print("USERNAME =", username)
-print("PASSWORD EXISTS =", bool(password))
+cl.login("siham.14z", "smaili3200")
 
-cl.login(username, password)
-print("Login successful ✅")
+print("Login with session ✅")
+
+cl.dump_settings("session.json")
+
+print("Session updated ✅")
 
 last_seen_file = "last_seen.txt"
 
