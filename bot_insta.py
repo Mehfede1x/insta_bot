@@ -4,11 +4,12 @@ import time
 
 cl = Client()
 
-cl.load_settings("session.json")
+cl = Client()
 
 cl.login("siham.14z", "smaili3200")
+cl.dump_settings("session.json")
 
-print("Login with session ✅")
+print("Session saved ✅")
 
 cl.dump_settings("session.json")
 
