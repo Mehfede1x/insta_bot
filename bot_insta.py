@@ -4,8 +4,11 @@ import time
 
 cl = Client()
 
-username = "siham.14z"
-password = "smaili3200"
+username = os.getenv("INSTA_USERNAME")
+password = os.getenv("INSTA_PASSWORD")
+
+print("USERNAME =", username)
+print("PASSWORD EXISTS =", bool(password))
 
 cl.login(username, password)
 print("Login successful ✅")
@@ -32,7 +35,6 @@ while True:
             text = (last_message.text or "").lower()
             user_id = thread.users[0].pk
 
-            # ma yjawbch 3la rasso
             if getattr(last_message, "is_sent_by_viewer", False):
                 continue
 
