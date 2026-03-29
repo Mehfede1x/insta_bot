@@ -3,12 +3,14 @@ import os
 import time
 
 cl = Client()
-cl.load_settings("session.json")
 
+# Load session
+cl.load_settings("session.json")
 print("Login with session ✅")
 
 last_seen_file = "last_seen.txt"
 
+# Load last seen message
 if os.path.exists(last_seen_file):
     with open(last_seen_file, "r", encoding="utf-8") as f:
         last_seen_id = f.read().strip()
@@ -29,24 +31,28 @@ while True:
             text = (last_message.text or "").lower()
             user_id = thread.users[0].pk
 
+            # ignore messages sent by you
             if getattr(last_message, "is_sent_by_viewer", False):
                 continue
 
+            # ignore already seen messages
             if message_id == last_seen_id:
                 continue
 
+            # replies
             if "salam" in text or "slm" in text:
                 reply = "Salam 👋 kif n9dr n3awnk?"
             elif "prix" in text or "taman" in text:
                 reply = "Marhba 👌 sift liya chno bghiti w an3tik taman."
             elif "bot" in text:
-                reply = "Eywa, n9dro nsaybo lik bot 3la hsab talab dialk 🤖"
+                reply = "Eywa 🤖 n9dro nsaybo lik bot 3la hsab talab dialk."
             else:
                 reply = "Merhba 😊 chrah liya chno bghiti w anjawbk."
 
             cl.direct_send(reply, [user_id])
             print("Reply sent ✅ ->", reply)
 
+            # save last message
             last_seen_id = message_id
             with open(last_seen_file, "w", encoding="utf-8") as f:
                 f.write(message_id)
